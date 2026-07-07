@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+bun.lock -diff

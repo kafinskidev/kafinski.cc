@@ -1,0 +1,21 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  riseOrder: number;
+}
+
+const { id, title, riseOrder } = Astro.props;
+---
+
+<section
+  id={id}
+  aria-labelledby={`${id}-title`}
+  class="motion-safe:rise grid gap-x-8 gap-y-6 border-t border-line py-12 sm:grid-cols-[10rem_1fr] sm:py-16"
+  style={`--rise-order: ${riseOrder}`}
+>
+  <h2 id={`${id}-title`} class="font-serif text-2xl tracking-tight sm:text-3xl">
+    {title}
+  </h2>
+  <slot />
+</section>
