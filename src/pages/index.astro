@@ -13,6 +13,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("/og.jpg", Astro.site).href;
 const year = new Date().getFullYear();
 
+const tools = [
+  { name: "TypeScript", icon: "simple-icons:typescript" },
+  { name: "Bun", icon: "simple-icons:bun" },
+  { name: "Java", icon: "simple-icons:openjdk" },
+  { name: "Kotlin", icon: "simple-icons:kotlin" },
+  { name: "Gradle", icon: "simple-icons:gradle" },
+  { name: "Rust", icon: "simple-icons:rust" },
+];
+
 const contacts = [
   {
     label: "Email",
@@ -113,7 +122,29 @@ const person = {
           </div>
         </header>
 
-        <Section id="work" title="Work" riseOrder={1}>
+        <Section id="tools" title="Tools" riseOrder={1}>
+          <div>
+            <p class="leading-relaxed text-muted text-pretty">
+              What’s usually open in my editor.
+            </p>
+            <ul role="list" class="mt-5 flex flex-wrap gap-x-8 gap-y-4">
+              {
+                tools.map((tool) => (
+                  <li class="flex items-center gap-2.5">
+                    <Icon
+                      name={tool.icon}
+                      aria-hidden="true"
+                      class="size-5 shrink-0 text-subtle"
+                    />
+                    <span class="text-sm font-medium text-muted">{tool.name}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </Section>
+
+        <Section id="work" title="Work" riseOrder={2}>
           <div>
             <p class="leading-relaxed text-muted text-pretty">
               Just getting started. This is the first thing worth a link.
@@ -141,7 +172,7 @@ const person = {
           </div>
         </Section>
 
-        <Section id="contact" title="Contact" riseOrder={2}>
+        <Section id="contact" title="Contact" riseOrder={3}>
           <div>
             <p class="leading-relaxed text-muted text-pretty">
               Discord is where I reply fastest. Email works for anything longer.
