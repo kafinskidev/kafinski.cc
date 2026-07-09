@@ -1,0 +1,72 @@
+<span class="sr-only">Hiya</span><span
+  aria-hidden="true"
+  data-greeting
+  class="inline-block whitespace-nowrap transition-[width] duration-(--duration-greeting) ease-(--ease-rise)"
+  >Hiya</span
+>,
+
+<script>
+  const greetings = [
+    ["Hiya", "en"],
+    ["Cześć", "pl"],
+    ["Hola", "es"],
+    ["Ciao", "it"],
+    ["Hallo", "de"],
+    ["Ahoj", "cs"],
+    ["Hei", "fi"],
+    ["Salut", "ro"],
+    ["Olá", "pt"],
+    ["Hej", "sv"],
+  ] as const;
+
+  const greeting = document.querySelector<HTMLElement>("[data-greeting]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (greeting) {
+    const styles = getComputedStyle(greeting);
+    const token = (name: string) => styles.getPropertyValue(name).trim();
+    const milliseconds = (value: string) =>
+      Number.parseFloat(value) * (value.endsWith("ms") ? 1 : 1000);
+
+    const fade = milliseconds(token("--duration-greeting"));
+    const exit = milliseconds(token("--duration-greeting-exit"));
+    const step = milliseconds(token("--duration-greeting-step"));
+    const ease = token("--ease-rise");
+
+    let index = 0;
+    let current: Animation | undefined;
+
+    const play = (keyframes: Keyframe[], duration: number) => {
+      current?.cancel();
+      current = greeting.animate(keyframes, {
+        duration,
+        easing: ease,
+        fill: "forwards",
+      });
+    };
+
+    const showNext = () => {
+      if (document.hidden || reducedMotion.matches) return;
+      index = (index + 1) % greetings.length;
+      const [text, lang] = greetings[index] ?? greetings[0];
+      const previousWidth = greeting.offsetWidth;
+
+      play([{ opacity: 1 }, { opacity: 0, transform: "translateY(-0.35em)" }], exit);
+      setTimeout(() => {
+        greeting.textContent = text;
+        greeting.lang = lang;
+        greeting.style.width = "auto";
+        const nextWidth = greeting.offsetWidth;
+        greeting.style.width = `${previousWidth}px`;
+        void greeting.offsetWidth;
+        greeting.style.width = `${nextWidth}px`;
+        play([{ opacity: 0, transform: "translateY(0.35em)" }, { opacity: 1 }], fade);
+        setTimeout(() => {
+          greeting.style.width = "auto";
+        }, fade);
+      }, exit);
+    };
+
+    setInterval(showNext, step);
+  }
+</script>

@@ -2,6 +2,7 @@
 import interFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2";
 import serifFont from "@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2";
 import { Icon } from "astro-icon/components";
+import RotatingGreeting from "../components/RotatingGreeting.astro";
 import Section from "../components/Section.astro";
 import "../styles/global.css";
 
@@ -107,8 +108,8 @@ const person = {
             kafinski
           </h1>
           <p class="mt-1 text-sm text-subtle">[kaˈfiɲski]</p>
-          <p class="mt-6 max-w-md text-lg leading-relaxed text-muted text-balance lg:text-xl">
-            Hiya, I’m a 17-year-old student programmer from Poland.
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-muted lg:text-xl">
+            <RotatingGreeting /> I’m a 17-year-old student programmer from Poland.
             I’m drawn to software that is <strong class="font-semibold text-ink">simple, useful, and reliable</strong>.
           </p>
           <div class="mt-8">
